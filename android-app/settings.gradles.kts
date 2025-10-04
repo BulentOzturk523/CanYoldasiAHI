@@ -1,4 +1,4 @@
-// Top-level settings file
+// Proje ayarları dosyası
 pluginManagement {
     repositories {
         google()

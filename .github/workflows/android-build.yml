@@ -1,46 +1,32 @@
-# Bu GitHub Action iş akışının adı
 name: Android CI - Build APK
-
-# Bu iş akışının ne zaman tetikleneceğini belirler
 on:
-  # "master" dalına her yeni kod gönderildiğinde (push) çalışır
   push:
-    branches: [ "master" ]
-  # Ayrıca, GitHub arayüzünden manuel olarak da çalıştırılabilir
+    branches: [ "main", "master" ]
   workflow_dispatch:
 
-# İş akışının adımları
 jobs:
   build:
-    # Bu işin, GitHub tarafından sağlanan temiz bir Ubuntu sanal makinesinde çalışacağını belirtir
     runs-on: ubuntu-latest
-
     steps:
-    # 1. Adım: Proje kodunu GitHub deposundan sanal makineye indirir
-    - name: Checkout repository
-      uses: actions/checkout@v3
+      - name: 1. Proje Kodunu İndir
+        uses: actions/checkout@v3
 
-    # 2. Adım: Java Geliştirme Kiti'ni (JDK) kurar. Android derlemesi için gereklidir.
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'gradle'
+      - name: 2. Java (JDK 17) Kurulumu
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    # 3. Adım: Android projesini derlenebilir hale getirir (izinleri ayarlar)
-    - name: Grant execute permission for gradlew
-      run: chmod +x android-app/gradlew
-      working-directory: ./
+      - name: 3. Gradle Wrapper'a Çalıştırma İzni Ver
+        run: chmod +x android-app/gradlew
+        working-directory: ./
 
-    # 4. Adım: Android uygulamasını derler ve bir "debug" APK'sı oluşturur
-    - name: Build with Gradle
-      run: ./gradlew assembleDebug
-      working-directory: ./android-app
+      - name: 4. Android Uygulamasını Derle (APK Oluştur)
+        run: ./gradlew assembleDebug
+        working-directory: ./android-app
 
-    # 5. Adım: Oluşturulan APK dosyasını, daha sonra indirebilmemiz için "artifact" olarak kaydeder
-    - name: Upload APK as artifact
-      uses: actions/upload-artifact@v3
-      with:
-        name: CanYoldasiAHI-debug-apk
-        path: android-app/app/build/outputs/apk/debug/app-debug.apk
+      - name: 5. Oluşturulan APK'yı Kaydet
+        uses: actions/upload-artifact@v3
+        with:
+          name: CanYoldasiAHI-debug-apk
+          path: android-app/app/build/outputs/apk/debug/app-debug.apk
