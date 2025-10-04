@@ -17,14 +17,15 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: 3. TEK ADIMDA DERLEME (ZORLA ÇALIŞTIRMA)
-        run: |
-          cd android-app
-          chmod +x ./gradlew
-          ./gradlew assembleDebug
+      - name: 3. Gradle Wrapper'a Çalıştırma İzni Ver
+        run: chmod +x android-app/gradlew
         working-directory: ./
 
-      - name: 4. Oluşturulan APK'yı Kaydet
+      - name: 4. Android Uygulamasını Derle (APK Oluştur)
+        run: ./gradlew assembleDebug
+        working-directory: ./android-app
+
+      - name: 5. Oluşturulan APK'yı Kaydet
         uses: actions/upload-artifact@v4
         with:
           name: CanYoldasiAHI-debug-apk
