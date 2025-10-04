@@ -1,0 +1,20 @@
+{
+  "name": "can-yoldasi-ahi-functions",
+  "version": "1.0.0",
+  "description": "Can Yoldaşı AHI için Uzman Beyincikler",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "tsc"
+  },
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "firebase-admin": "^11.11.1",
+    "firebase-functions": "^4.7.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "private": true
+}
