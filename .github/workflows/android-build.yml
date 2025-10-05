@@ -1,7 +1,7 @@
 name: Android CI - Build APK
 on:
   push:
-    branches: [ "main", "master" ]
+    branches: [ "main" ]
   workflow_dispatch:
 
 jobs:
@@ -9,10 +9,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 1. Proje Kodunu İndir
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: 2. Java (JDK 17) Kurulumu
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -22,7 +22,7 @@ jobs:
         working-directory: ./
 
       - name: 4. Android Uygulamasını Derle (APK Oluştur)
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug -Pandroid.useAndroidX=true
         working-directory: ./android-app
 
       - name: 5. Oluşturulan APK'yı Kaydet
