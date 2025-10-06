@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <!-- Filizlenen Beyin konseptinin vektör çizimi buraya gelecek -->
+    <!-- Örnek olarak, bir path data eklenebilir. Gerçek tasarım için SVG'den dönüştürülebilir. -->
+    <path
+        android:fillColor="#4CAF50" <!-- Canlı, umut veren filiz yeşili -->
+        android:pathData="M36,36 C36,24 48,24 48,36 C48,48 36,48 36,36 Z" /> <!-- Basit bir filiz örneği -->
+    <path
+        android:fillColor="#3D352E" <!-- Koyu, sıcak bir toprak/kahve tonu -->
+        android:pathData="M0,54 L108,54 L108,108 L0,108 Z" /> <!-- Toprak kıvrımlarını andıran beyin silüeti için basit bir zemin -->
+    <!-- Gerçek "Filizlenen Beyin" tasarımının detaylı path verileri buraya eklenecektir. -->
+</vector>
