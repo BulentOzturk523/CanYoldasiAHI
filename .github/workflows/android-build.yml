@@ -1,32 +1,60 @@
+# Bu GitHub Action iş akışının adı
 name: Android CI - Build APK
+
+# Bu iş akışının ne zaman tetikleneceğini belirler
 on:
+  # "main" veya "master" dallarına her yeni kod gönderildiğinde (push) çalışır
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master" ]
+  # Ayrıca, GitHub arayüzünden manuel olarak da çalıştırılabilir
   workflow_dispatch:
 
+# İş akışının adımları
 jobs:
   build:
+    # Bu işin, GitHub tarafından sağlanan temiz bir Ubuntu sanal makinesinde çalışacağını belirtir
     runs-on: ubuntu-latest
+
     steps:
-      - name: 1. Proje Kodunu İndir
-        uses: actions/checkout@v4
+    # 1. Adım: Proje kodunu GitHub deposundan sanal makineye indirir
+    # En güncel ve güvenli sürüm olan v4 kullanılıyor.
+    - name: Checkout repository
+      uses: actions/checkout@v4
 
-      - name: 2. Java (JDK 17) Kurulumu
-        uses: actions/setup-java@v4
-        with:
-          java-version: '17'
-          distribution: 'temurin'
+    # 2. Adım: Java Geliştirme Kiti'ni (JDK) kurar ve Gradle önbelleğini ayarlar.
+    # Android derlemesi için JDK 17 kurulur.
+    # 'cache: gradle' parametresi, bağımlılıkları önbelleğe alarak sonraki derlemeleri önemli ölçüde hızlandırır.
+    # Bu, 'gradle/gradle-build-action' adımını gereksiz kılar ve kurulumu basitleştirir.
+    - name: Set up JDK 17 and Gradle Cache
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'gradle'
 
-      - name: 3. Gradle Wrapper'a Çalıştırma İzni Ver
-        run: chmod +x android-app/gradlew
-        working-directory: ./
+    # 3. Adım: Gradle Wrapper betiğine çalıştırma izni verir.
+    # Bu komut, derleme komutunu çalıştırabilmek için gereklidir.
+    # 'working-directory' ile komutun doğru klasörde çalışması sağlanır.
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+      working-directory: ./android-app
 
-      - name: 4. Android Uygulamasını Derle (APK Oluştur)
-        run: ./gradlew assembleDebug -Pandroid.useAndroidX=true
-        working-directory: ./android-app
+    # 4. Adım: Kod kalitesini kontrol etmek için Lint'i çalıştırır.
+    # Bu adım, potansiyel hataları ve iyileştirme alanlarını raporlar.
+    - name: Run Android Lint
+      run: ./gradlew lintDebug
+      working-directory: ./android-app
 
-      - name: 5. Oluşturulan APK'yı Kaydet
-        uses: actions/upload-artifact@v4
-        with:
-          name: CanYoldasiAHI-debug-apk
-          path: android-app/app/build/outputs/apk/debug/app-debug.apk
+    # 5. Adım: Android uygulamasını derler ve bir "debug" APK'sı oluşturur.
+    # Gradle Wrapper kullanılarak derleme görevi tetiklenir.
+    - name: Build with Gradle
+      run: ./gradlew assembleDebug
+      working-directory: ./android-app
+
+    # 6. Adım: Oluşturulan APK dosyasını, iş akışı sonuçlarında indirilebilir bir "artifact" olarak kaydeder.
+    # En güncel sürüm olan v4 kullanılıyor.
+    - name: Upload APK as artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: CanYoldasiAHI-debug-apk
+        path: android-app/app/build/outputs/apk/debug/app-debug.apk
