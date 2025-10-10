@@ -67,3 +67,12 @@ node_modules/
 
 # dataconnect generated files
 .dataconnect
+
+# End of https://www.topal.com/developer/gibignore/api/android
+
+#######################
+
+#imza anahtarı ve şifreleri
+#Bu dosyalar asla versiyon kontrolüne eklememelidir.
+#.jks
+keystore.properties

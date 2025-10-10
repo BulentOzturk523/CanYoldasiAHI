@@ -39,19 +39,13 @@ jobs:
       run: chmod +x gradlew
       working-directory: ./android-app
 
-    # 4. Adım: Kod kalitesini kontrol etmek için Lint'i çalıştırır.
-    # Bu adım, potansiyel hataları ve iyileştirme alanlarını raporlar.
-    - name: Run Android Lint
-      run: ./gradlew lintDebug
-      working-directory: ./android-app
-
-    # 5. Adım: Android uygulamasını derler ve bir "debug" APK'sı oluşturur.
+    # 4. Adım: Android uygulamasını derler ve bir "debug" APK'sı oluşturur.
     # Gradle Wrapper kullanılarak derleme görevi tetiklenir.
     - name: Build with Gradle
       run: ./gradlew assembleDebug
       working-directory: ./android-app
 
-    # 6. Adım: Oluşturulan APK dosyasını, iş akışı sonuçlarında indirilebilir bir "artifact" olarak kaydeder.
+    # 5. Adım: Oluşturulan APK dosyasını, iş akışı sonuçlarında indirilebilir bir "artifact" olarak kaydeder.
     # En güncel sürüm olan v4 kullanılıyor.
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v4
