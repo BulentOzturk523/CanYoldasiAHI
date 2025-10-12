@@ -1,23 +1,18 @@
 @Suppress("DSL_SCOPE_VIOLATION") // TODO: Remove once KTIJ-19369 is fixed
-// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
 plugins {
-    id("com.android.application") version "8.2.0"
-    id("org.jetbrains.kotlin.android") version "1.9.0"
-    id("com.android.application") version "8.2.2" apply false
-    id("org.jetbrains.kotlin.android") version "1.9.0" apply false
-    kotlin("android")
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
     namespace = "com.canyoldasi.ahi"
     compileSdk = 34
-    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.canyoldasi.ahi"
         minSdk = 24
         targetSdk = 34
-        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -25,7 +20,6 @@ android {
     }
 
     buildTypes {
-        release {
         getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
@@ -34,10 +28,12 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+
     kotlinOptions {
         jvmTarget = "1.8"
     }
