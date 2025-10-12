@@ -3,12 +3,8 @@
 plugins {
     id("com.android.application") version "8.2.0"
     id("org.jetbrains.kotlin.android") version "1.9.0"
-    // 'alias' yerine 'id' ve 'version' kullanarak eklentileri tanımlayın,
-    // 'apply false' ile bu eklentilerin sadece sürümünü merkezi olarak yönetin,
-    // alt modüllerde ise sadece 'id' ile uygulayın.
     id("com.android.application") version "8.2.2" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
-    id("com.android.application")
     kotlin("android")
 }
 
