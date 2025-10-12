@@ -8,16 +8,20 @@ plugins {
     // alt modüllerde ise sadece 'id' ile uygulayın.
     id("com.android.application") version "8.2.2" apply false
     id("org.jetbrains.kotlin.android") version "1.9.0" apply false
+    id("com.android.application")
+    kotlin("android")
 }
 
 android {
     namespace = "com.canyoldasi.ahi"
     compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.canyoldasi.ahi"
         minSdk = 24
         targetSdk = 34
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
 
@@ -26,6 +30,7 @@ android {
 
     buildTypes {
         release {
+        getByName("release") {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
