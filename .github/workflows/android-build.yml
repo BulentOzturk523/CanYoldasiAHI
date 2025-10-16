@@ -53,3 +53,12 @@ jobs:
       with:
         name: CanYoldasiAHI-debug-apk
         path: android-app/build/outputs/apk/debug/app-debug.apk
+    #6. Adım: APK dosyasının gerçekten oluşturulup oluşturulmadığını kontrol eder.
+    - name: Check if APK exists
+  run: |
+    if [ -f android-app/build/outputs/apk/debug/app-debug.apk ]; then
+      echo "APK exists"
+    else
+      echo "APK does not exist"
+      exit 1
+    fi
