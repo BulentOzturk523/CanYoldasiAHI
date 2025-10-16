@@ -7,12 +7,12 @@ plugins {
 
 android {
     namespace = "com.canyoldasi.ahi"
-    compileSdk = 34
+    compileSdk = 34 // Bu satırı tek ve 34 yap, duplicate sil
 
     defaultConfig {
         applicationId = "com.canyoldasi.ahi"
         minSdk = 24
-        targetSdk = 34
+        targetSdk = 34 // Bu satırı tek ve 34 yap, duplicate sil
         versionCode = 1
         versionName = "1.0"
 

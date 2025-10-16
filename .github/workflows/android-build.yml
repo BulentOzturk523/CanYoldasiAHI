@@ -24,7 +24,6 @@ jobs:
     # 2. Adım: Java Geliştirme Kiti'ni (JDK) kurar ve Gradle önbelleğini ayarlar.
     # Android derlemesi için JDK 17 kurulur.
     # 'cache: gradle' parametresi, bağımlılıkları önbelleğe alarak sonraki derlemeleri önemli ölçüde hızlandırır.
-    # Bu, 'gradle/gradle-build-action' adımını gereksiz kılar ve kurulumu basitleştirir.
     - name: Set up JDK 17 and Gradle Cache
       uses: actions/setup-java@v4
       with:
@@ -34,21 +33,23 @@ jobs:
 
     # 3. Adım: Gradle Wrapper betiğine çalıştırma izni verir.
     # Bu komut, derleme komutunu çalıştırabilmek için gereklidir.
-    # 'working-directory' ile komutun doğru klasörde çalışması sağlanır.
+    # working-directory root'ta, çünkü gradlew proje kökünde.
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      working-directory: ./android-app
+      working-directory: .
 
     # 4. Adım: Android uygulamasını derler ve bir "debug" APK'sı oluşturur.
     # Gradle Wrapper kullanılarak derleme görevi tetiklenir.
+    # working-directory root'ta, android-app modülü include edildiği için assembleDebug çalışır.
     - name: Build with Gradle
       run: ./gradlew assembleDebug
-      working-directory: ./android-app
+      working-directory: .
 
     # 5. Adım: Oluşturulan APK dosyasını, iş akışı sonuçlarında indirilebilir bir "artifact" olarak kaydeder.
     # En güncel sürüm olan v4 kullanılıyor.
+    # Yol düzeltildi: android-app modülü için doğru konum.
     - name: Upload APK as artifact
       uses: actions/upload-artifact@v4
       with:
         name: CanYoldasiAHI-debug-apk
-        path: android-app/app/build/outputs/apk/debug/app-debug.apk
+        path: android-app/build/outputs/apk/debug/app-debug.apk
